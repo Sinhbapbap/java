@@ -1,0 +1,97 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bai4;
+
+import java.text.NumberFormat;
+import java.util.Locale;
+
+/**
+ *
+ * @author ThuSinh
+ */
+public class account {
+    private long accNumber;
+    private String accName;
+    private double wallet;
+    private final static float interestRate = 0.035f;
+    
+    public account(){
+        this.accNumber = 0;
+        this.accName = "";
+        this.wallet = 0;
+        
+    }
+    public account( long accNumber, String accName){
+        this.accNumber = accNumber;
+        this.accName = accName;
+        this.wallet = 50;
+    }
+
+    /**
+     *
+     * @param accNumber
+     */
+    public void setaccNumber(long accNumber) {
+        this.accNumber = accNumber;
+    }
+
+    public void setaccName(String accName) {
+        this.accName = accName;
+    }
+
+    public void setWallet(double wallet) {
+        this.wallet = wallet;
+    }
+
+    public long getAccNumber() {
+        return accNumber;
+    }
+
+    public String getAccName() {
+        return accName;
+    }
+
+    public double getWallet() {
+        return wallet;
+    }
+
+    
+
+    @Override
+    public String toString() {
+        Locale localeVN = new Locale("vi", "VN");
+        NumberFormat CurrencyVN = NumberFormat.getCurrencyInstance(localeVN);
+        return "account{" + "soTaiKhoan=" + accNumber + "\ntenTaiKhoan=" + accName + "\nsoTienTrongTaiKhoan=" + CurrencyVN.format(this.wallet) + '}';
+    }
+    public double recharge (double moneyRecharge ){
+        if(moneyRecharge > 0){
+            this.wallet += moneyRecharge;
+            return moneyRecharge;
+        }
+        return 0;
+    }
+    public double withdrawal (double  moneywithdrawal){
+        if( moneywithdrawal > 0 && moneywithdrawal < this.wallet ){
+           this.wallet -= moneywithdrawal;
+           return moneywithdrawal;
+        }
+        return 0;
+    }
+    public double maturityDate(){
+        this.wallet = this.wallet + this.wallet* interestRate;
+        return this.wallet;
+    }
+    public double stranfer(long accNumber, String accName, double moneyStranfer){
+        if( wallet > 0 && moneyStranfer < wallet){
+            wallet -= moneyStranfer;
+            return moneyStranfer;
+        }
+        return 0;
+    }
+    
+    
+    
+}
